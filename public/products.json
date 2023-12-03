@@ -1,0 +1,5 @@
+[
+  { "name": "cowboy hat", "color": "brown", "brand": "west side", "price": "120$" },
+  { "name": "army boot", "color": "black", "brand": "CAT", "price": "240$" },
+  { "name": "polo shirt", "color": "syan", "brand": "1369", "price": "444$" }
+]
