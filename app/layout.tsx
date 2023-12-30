@@ -1,15 +1,18 @@
 import '@mantine/core/styles.css';
 import React from 'react';
 import { MantineProvider, ColorSchemeScript } from '@mantine/core';
-// import { CookiesProvider } from 'react-cookie';
+import { Metadata } from 'next';
 import { theme } from '../theme';
 import Header from './ui/Header';
 import vazir from './ui/fonts';
 import AuthProvider from './Context/context';
 
-export const metadata = {
-  title: 'Mantine Next.js template',
-  description: 'I am using Mantine with Next.js!',
+export const metadata: Metadata = {
+  title: {
+    template: '%s | ریسلو',
+    default: 'ریسلو',
+  },
+  description: 'simple risloo project powered by mantine',
 };
 
 export default function RootLayout({ children }: { children: any }) {
@@ -26,10 +29,8 @@ export default function RootLayout({ children }: { children: any }) {
       <body className={`${vazir.className}`}>
         <MantineProvider theme={theme}>
           <AuthProvider>
-            {/* <CookiesProvider> */}
-              <Header />
-              {children}
-            {/* </CookiesProvider> */}
+            <Header />
+            {children}
           </AuthProvider>
         </MantineProvider>
       </body>
