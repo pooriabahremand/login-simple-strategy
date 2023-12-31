@@ -1,11 +1,9 @@
 import Link from 'next/link';
 import LoginBtn from './LoginBtn';
-import HandleCookies from '../lib/handleCookies';
 
 export default function Header() {
   return (
     <>
-      <HandleCookies />
       <div
         style={{
           display: 'flex',

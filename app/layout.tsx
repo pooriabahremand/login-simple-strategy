@@ -3,9 +3,9 @@ import React from 'react';
 import { MantineProvider, ColorSchemeScript } from '@mantine/core';
 import { Metadata } from 'next';
 import { theme } from '../theme';
+import AuthProvider from './Context/context';
 import Header from './ui/Header';
 import vazir from './ui/fonts';
-import AuthProvider from './Context/context';
 
 export const metadata: Metadata = {
   title: {

@@ -17,36 +17,41 @@ import {
   rem,
 } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons-react';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import classes from './Login.module.css';
-import { AuthContext } from '@/app/Context/context';
 
 export default function Login() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   const [email, setEmail] = useState<undefined | string>(undefined);
-  const { setIsLoggedIn, setUserEmail } = useContext(AuthContext);
-  // const [cookies, setCookie] = useCookies(['user']);
 
   const onClickHandler = () => {
-    // eslint-disable-next-line @typescript-eslint/no-shadow, @typescript-eslint/no-unused-vars
+    const maxRetries = 3;
+
+    // eslint-disable-next-line consistent-return
     if (email !== undefined && email.length > 0) {
-      fetch('/login/api', {
+      // eslint-disable-next-line consistent-return
+      const fetchData = async (url: string, options: RequestInit, attempt = 0): Promise<void> => {
+        try {
+          const response = await fetch(url, options);
+          const data = await response.json();
+          console.log(data);
+          router.replace('/');
+        } catch (error) {
+          console.error(`Attempt ${attempt + 1} failed`, error);
+          if (attempt < maxRetries) {
+            return fetchData(url, options, attempt + 1);
+          }
+          console.error('Max retries exceeded', error);
+        }
+      };
+      const options: RequestInit = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          setIsLoggedIn(true);
-          setUserEmail(email);
-          router.replace('/');
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      };
+      fetchData('/login/api', options);
     }
   };
 

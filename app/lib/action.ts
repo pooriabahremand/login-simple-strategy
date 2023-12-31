@@ -1,7 +1,9 @@
+'use server';
+
 import { cookies } from 'next/headers';
 import CryptoJS from 'crypto-js';
 
-export function UserData() {
+export async function decryptCookie() {
   const cookieStore = cookies();
 
   const user = cookieStore.get('user');
@@ -10,10 +12,10 @@ export function UserData() {
   if (user?.value !== undefined) {
     const bytes = CryptoJS.AES.decrypt(user?.value, secretKey as string);
     const originalText = bytes.toString(CryptoJS.enc.Utf8);
-    returnedText = ` welcome ${originalText}`;
+    returnedText = `${originalText}`;
   } else {
-    returnedText = 'there is no cookie';
+    returnedText = '';
   }
 
-  return <p>{returnedText}</p>;
+  return returnedText;
 }
